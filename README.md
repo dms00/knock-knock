@@ -11,6 +11,10 @@ port combinations.
 The project supports multiple clients, so each client can have their own TOTP secret 
 and PIN.
 
+For now the server app must be run as root. There's a `sudo` option in the config,
+which enabled the app to be run as non-root user,
+but the change from UFW log monitoring to tcpdump broke that feature.
+
 ## Python requirements
 - pyotp : Python's One-Time-Password package
 - qrcode
