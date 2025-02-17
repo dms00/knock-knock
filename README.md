@@ -4,9 +4,8 @@ This project implements [port knocking](https://en.wikipedia.org/wiki/Port_knock
 for Unix-based systems, but does it with a twist. Instead of allowing the user 
 to statically define a port combination, it uses a time-based one-time-password (TOTP) to
 generate the port-combination. And just as TOTP codes change every 30 seconds, 
-the port-combo also changes every 30 seconds. Since there's only 1,000,000 TOTP values 
-there's also support for an optional PIN to prevent pre-calculating all 1 million 
-port combinations.
+the port-combo also changes every 30 seconds. Also, because TOTP uses only six digits, there's also support for an optional PIN to prevent pre-calculating 
+the 1-million port combinations that would exist without a PIN.
 
 The project supports multiple clients, so each client can have their own TOTP secret 
 and PIN.
@@ -15,10 +14,23 @@ For now the server app must be run as root. There's a `sudo` option in the confi
 which enabled the app to be run as non-root user,
 but the change from UFW log monitoring to tcpdump broke that feature.
 
+The setup and packaging is not done yet, so if you want to give the project a 
+try, here's what you'll need to know. There's three executables that make up the package.
+
+ - `knocklisten.py` - This is the main server app that monitors for port 
+ knocks and opens/closes ports in the firewall using the `ufw` program.
+ - `knock-clientadd.py` - This app is meant to run on the server and creates new
+ client configurations, including generating the TOTP secret, and can print a QR code
+ in the terminal to use for setting up the authenticator.
+ - `knockclient.py` runs on the client machine. It calculates the port combination 
+ to use and does the port knocking.
+
+I would recommend running these executables from a Python virtual env.
+
 ## Python requirements
-- pyotp : Python's One-Time-Password package
-- qrcode
-- python-dateutil
+- `pyotp` : Python's One-Time-Password package
+- `qrcode`
+- `python-dateutil`
 
 ## System requirements:
 - Only tested on Ubuntu 24.04, but "probably" works on any reasonably 
