@@ -7,7 +7,7 @@ pidfile = "/var/run/knock.pid"
 client_cfg = "/etc/knockknock/conf.d"
 
 # If knock crashes, open ports (best effort only)
-failopen = true
+failopen = false
 # Ports to open if knock exits unexpectedly
 failopen_ports = ["22/tcp"]
 # Minimum time to keep ports open after unexpected exit
@@ -16,21 +16,21 @@ failopen_min_time = 60
 
 [ufw]
 ufw_cmd = "/usr/sbin/ufw"
-use_sudo = true
+use_sudo = false
 
 
 [tcpdump]
 log_file = "/tmp/knock-tcpdump.out"
 cmd = "/usr/bin/tcpdump"
 # Number of lines to allow before truncating log file
-truncate_size = 5
+truncate_size = 100
 
 
 [logging]
 # debug, info, warning, error, critical
 log_level = "info"
 # log to syslog. If false, will log to stderr
-syslog = false
+syslog = true
 
 
 #[clients]
